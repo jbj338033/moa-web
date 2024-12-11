@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["dodam.b1nd.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "dodamdodam-storage.s3.ap-northeast-2.amazonaws.com",
+      },
+    ],
   },
 };
 

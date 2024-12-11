@@ -37,50 +37,75 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
-      <div className="bg-gray-900/90 backdrop-blur-md">
+    <header className="fixed top-0 left-0 right-0 z-50 shadow-sm">
+      <div className="bg-white/90 backdrop-blur-md border-b border-gray-100">
         <nav className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-white">
+          {/* Logo with subtle hover effect */}
+          <Link
+            href="/"
+            className="text-2xl font-bold text-gray-800 transition-colors duration-300 hover:text-blue-600"
+          >
             MOA
           </Link>
 
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-6">
             {menuItems.map((item) => (
               <button
                 key={item.name}
                 onClick={() => handleAuthRequired(item.href, item.requireAuth)}
-                className="text-gray-300 hover:text-white transition-colors px-2 py-1 text-sm"
+                className="text-gray-600 hover:text-blue-600 
+                           transition-colors duration-300 
+                           px-2 py-1 rounded-md 
+                           text-sm font-medium"
               >
                 {item.name}
               </button>
             ))}
           </div>
 
-          <div className="flex items-center">
+          {/* Right Side Icons and Actions */}
+          <div className="flex items-center space-x-4">
             {accessToken ? (
-              <div className="flex items-center gap-4">
-                <button className="text-gray-300 hover:text-white">
+              <div className="flex items-center space-x-4">
+                {/* Notification Icon with subtle hover */}
+                <button
+                  className="text-gray-500 hover:text-blue-600 
+                                   transition-colors duration-300"
+                >
                   <FiBell className="w-5 h-5" />
                 </button>
+
+                {/* Profile Dropdown with clean styling */}
                 <div className="relative group">
-                  <button className="text-gray-300 hover:text-white">
+                  <button
+                    className="text-gray-500 hover:text-blue-600 
+                                     transition-colors duration-300"
+                  >
                     <FiUser className="w-5 h-5" />
                   </button>
                   <div
-                    className="absolute right-0 mt-4 w-40 py-2 invisible group-hover:visible 
-                              opacity-0 group-hover:opacity-100 transform 
-                              bg-gray-800 rounded-lg shadow-lg
-                              transition-all duration-200 ease-in-out"
+                    className="absolute right-0 mt-3 w-48 py-1 
+                              origin-top-right transform 
+                              transition-all duration-200 ease-out
+                              opacity-0 invisible 
+                              group-hover:opacity-100 group-hover:visible
+                              bg-white rounded-lg shadow-lg 
+                              border border-gray-100"
                   >
                     <Link
                       href="/profile"
-                      className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700"
+                      className="block px-4 py-2 text-sm text-gray-700 
+                                 hover:bg-gray-50 
+                                 transition-colors duration-300"
                     >
                       프로필
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700"
+                      className="w-full text-left px-4 py-2 text-sm 
+                                 text-red-500 hover:bg-gray-50 
+                                 transition-colors duration-300"
                     >
                       로그아웃
                     </button>
@@ -90,31 +115,35 @@ const Header: React.FC = () => {
             ) : (
               <button
                 onClick={() => router.push("/login")}
-                className="text-gray-300 hover:text-white transition-colors p-2"
+                className="text-gray-600 hover:text-blue-600 
+                           transition-colors duration-300 
+                           flex items-center gap-2"
               >
-                <FiLogIn className="w-5 h-5 md:hidden" />
-                <span className="hidden md:inline-flex items-center gap-2">
-                  <FiLogIn className="w-4 h-4" />
-                  <span className="text-sm">로그인</span>
+                <FiLogIn className="w-5 h-5 md:w-4 md:h-4" />
+                <span className="hidden md:inline text-sm font-medium">
+                  로그인
                 </span>
               </button>
             )}
 
+            {/* Mobile Menu Toggle */}
             <button
-              className="md:hidden text-gray-300 hover:text-white p-2 ml-2"
+              className="md:hidden text-gray-600 hover:text-blue-600 
+                         transition-colors duration-300 p-2"
               onClick={() => setIsOpen(!isOpen)}
             >
               {isOpen ? (
-                <FiX className="w-5 h-5" />
+                <FiX className="w-6 h-6" />
               ) : (
-                <FiMenu className="w-5 h-5" />
+                <FiMenu className="w-6 h-6" />
               )}
             </button>
           </div>
         </nav>
 
+        {/* Mobile Menu Dropdown */}
         {isOpen && (
-          <div className="md:hidden border-t border-gray-800 bg-gray-900/95">
+          <div className="md:hidden border-t border-gray-100 bg-white/95">
             <div className="max-w-7xl mx-auto py-2">
               {menuItems.map((item) => (
                 <button
@@ -123,7 +152,10 @@ const Header: React.FC = () => {
                     handleAuthRequired(item.href, item.requireAuth);
                     setIsOpen(false);
                   }}
-                  className="block w-full text-left px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 text-sm transition-colors"
+                  className="block w-full text-left px-4 py-3 
+                             text-gray-600 hover:text-blue-600 
+                             hover:bg-gray-50 text-sm 
+                             transition-colors duration-300"
                 >
                   {item.name}
                 </button>

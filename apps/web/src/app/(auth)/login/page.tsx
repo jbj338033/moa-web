@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { useTokenStore } from "../../stores/token";
+import { useTokenStore } from "../../../stores/token";
 
 interface LoginForm {
   id: string;

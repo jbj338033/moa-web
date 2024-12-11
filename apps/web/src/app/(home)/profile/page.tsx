@@ -3,21 +3,11 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { FiUser, FiClock, FiCheckCircle, FiXCircle, FiX } from "react-icons/fi";
-import { useTokenStore } from "../../stores/token";
+import { useTokenStore } from "../../../stores/token";
 import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
-
-interface UserMeResponse {
-  id: string;
-  dodamId: string;
-  grade: number;
-  room: number;
-  number: number;
-  name: string;
-  profileImage: string | null;
-  role: string;
-  email: string;
-}
+import Image from "next/image";
+import { UserMeResponse } from "../../../types/user";
 
 interface ClubResponse {
   id: string;
@@ -245,10 +235,12 @@ export default function ProfilePage() {
           <div className="bg-white rounded-2xl shadow-sm">
             <div className="p-8 flex items-center gap-6">
               {profileImageSrc ? (
-                <img
+                <Image
                   src={profileImageSrc}
                   alt=""
                   className="w-24 h-24 rounded-full object-cover"
+                  width={96}
+                  height={96}
                 />
               ) : (
                 <div className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center">
@@ -268,7 +260,7 @@ export default function ProfilePage() {
                 </div>
                 <div className="mt-3">
                   <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-medium">
-                    {user?.role}
+                    {user?.role === "STUDENT" ? "학생" : "선생님"}
                   </span>
                 </div>
               </div>
@@ -288,10 +280,12 @@ export default function ProfilePage() {
                     key={apply.id}
                     className="flex items-center gap-6 p-4 border border-gray-100 rounded-xl hover:border-gray-200 transition-colors"
                   >
-                    <img
+                    <Image
                       src={apply.club.image}
                       alt={apply.club.name}
                       className="w-16 h-16 rounded-lg object-cover"
+                      width={64}
+                      height={64}
                     />
                     <div className="flex-grow">
                       <h3 className="font-medium text-gray-900">
