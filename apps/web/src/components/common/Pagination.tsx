@@ -1,18 +1,21 @@
 import { Page } from "../../types/pagination";
 
-type PaginationProps = {
-  page: Page<any>;
+type PaginationProps<T> = {
+  page: Page<T>;
   onPageChange: (page: number) => void;
 };
 
-export default function Pagination({ page, onPageChange }: PaginationProps) {
+export default function Pagination<T>({
+  page,
+  onPageChange,
+}: PaginationProps<T>) {
   const currentPage = page.number;
   const totalPages = page.totalPages;
   const pageNumbers = [];
   const maxVisiblePages = 5;
 
   let startPage = Math.max(currentPage - Math.floor(maxVisiblePages / 2), 0);
-  let endPage = Math.min(startPage + maxVisiblePages - 1, totalPages - 1);
+  const endPage = Math.min(startPage + maxVisiblePages - 1, totalPages - 1);
 
   if (endPage - startPage < maxVisiblePages - 1) {
     startPage = Math.max(endPage - maxVisiblePages + 1, 0);
